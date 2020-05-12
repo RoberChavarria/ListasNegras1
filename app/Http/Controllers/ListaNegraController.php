@@ -22,5 +22,7 @@ class ListaNegraController extends Controller
         $dataGrid = BlackList::all()->toArray();
         // dd($dataGrid);
         return DataTables::of($dataGrid)->rawColumns(['RFC', 'Nombre del Contribuyente'])->make(true);
+
+        //dd
     }
 }
