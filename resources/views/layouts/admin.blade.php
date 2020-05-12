@@ -269,6 +269,7 @@
                 };
                 localStorage.setItem('themeSettings', JSON.stringify(themeSettings));
             }
+            
             /** 
              * Reset settings
              **/
