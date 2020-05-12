@@ -32,6 +32,7 @@
                         <tr>
                           <th>RFC</th>
                           <th>CONTRIBUYENTE</th>
+                          <th>SITUACIÓN</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -57,39 +58,26 @@
             }
           });
   $(document).ready(function() {
-    
+
     $('#tableGrid').DataTable({
-
-      responsive : true,
-      ajax: "{{ route('getList') }}",
-      columns: [
-        {data: 'RFC', name: 'RFC'},
-        {data: 'Nombre del Contribuyente', name: 'Nombre del Contribuyente'},
-
-        
-      ],
-      language: {
-          "decimal": "",
-          "emptyTable": "No hay información",
-          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-          "infoPostFix": "",
-          "thousands": ",",
-          "lengthMenu": "Mostrar _MENU_ Entradas",
-          "loadingRecords": "Cargando...",
-          "processing": "Procesando...",
-          
-          "zeroRecords": "Sin resultados encontrados",
-          "paginate": {
-              "first": "Primero",
-              "last": "Ultimo",
-              "next": "Siguiente",
-              "previous": "Anterior"
-          }
-      }
-
+          ajax: "{{ route('getList') }}",
+          columns: [
+            {"data": "RFC"},
+            {"data": "NOMBRE"},
+            {"data": "SITUACION"}
+          ]
     }); 
+
+    $.ajax({
+      url: "{{ route('getList') }}",
+      success: function(data){
+        console.log(data);
+       
+
+      }
+    });
+    
+  });
  
 </script>
 @endsection

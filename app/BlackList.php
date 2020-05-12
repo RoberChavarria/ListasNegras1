@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlackList extends Model
 {
-    protected $table = "CONTRIBUYENTES2";
+    protected $table = "CONTRIBUYENTES";
     public $timestamps = false;
-    protected $fillable = ['RFC', 'Nombre del Contribuyente'];
+    protected $fillable = ['RFC', 'NOMBRE', 'SITUACION'];
 }

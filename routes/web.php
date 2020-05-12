@@ -21,7 +21,7 @@ Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('api.List','ListaNegraController@List')->name('api.List');
+Route::get('List','ListaNegraController@List')->name('List');
 
 Route::get('getList', 'ListaNegraController@getList')->name('getList');
 
