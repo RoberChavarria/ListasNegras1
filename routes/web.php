@@ -18,12 +18,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-// Auth::logout();
 
 Route::get('/home', 'ListaNegraController@List')->name('home');
 
-// Route::get('List','ListaNegraController@List')->name('List');
-
 Route::get('getList', 'ListaNegraController@getList')->name('getList');
+Route::get('/busquedaMasivaApp', 'ListaNegraController@busquedaMasivaApp')->name('busquedaMasivaApp');
 
 

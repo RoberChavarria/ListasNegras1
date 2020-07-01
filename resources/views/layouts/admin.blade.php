@@ -292,7 +292,7 @@
                   </a>
               </div>
               <nav id="js-primary-nav" class="primary-nav" role="navigation">
-               
+              @yield('MenuLat')
               </nav>
            </aside> 
           <div class="page-content-wrapper">
