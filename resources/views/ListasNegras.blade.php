@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @extends('tema')
+@extends('MenuLat')
 
 
 @section('content')

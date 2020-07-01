@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('List','ListaNegraController@List')->name('List');
+Route::get('/home', 'ListaNegraController@List')->name('home');
 
 Route::get('getList', 'ListaNegraController@getList')->name('getList');
+Route::get('/busquedaMasivaApp', 'ListaNegraController@busquedaMasivaApp')->name('busquedaMasivaApp');
+
 
