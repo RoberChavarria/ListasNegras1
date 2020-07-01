@@ -14,6 +14,7 @@ class ListaNegraController extends Controller
 
         return view('ListasNegras');
     }
+    
 
 
     public function getList()
