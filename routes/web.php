@@ -23,5 +23,8 @@ Route::get('/home', 'ListaNegraController@List')->name('home');
 
 Route::get('getList', 'ListaNegraController@getList')->name('getList');
 Route::get('/busquedaMasivaApp', 'ListaNegraController@busquedaMasivaApp')->name('busquedaMasivaApp');
+Route::get('/reporteTareas','ListaNegraController@reporteTareas')->name('reporteTareas');
+Route::get('api.reporteTareasGrid','ListaNegraController@reporteTareasGrid')->name('api.reporteTareasGrid');
+Route::get('/ejecProceso/{id}','ListaNegraController@show')->name('show');
 
 

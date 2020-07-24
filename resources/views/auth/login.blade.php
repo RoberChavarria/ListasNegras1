@@ -8,7 +8,25 @@
                 <div class="card-header">{{ __('Iniciar Sesion') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+
+                        @if (session('resent'))
+                            <div class="alert alert-success" role="alert">
+                                {{ __('Un nuevo correo se ha enviado al correo relacionado con este RFC') }}
+                            </div>
+                        @endif
+
+                        @error('alreadyConfirmed')
+                            <div class="alert alert-danger text-center" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+
+                        <div class="text-center alert alert-warning" id="globalAlert">
+                            {{ __('Antes de proceder, si usted es un usuario nuevo verifique su correo para Iniciar sesion') }}
+                        </div>
+                    <br/>
+
+                    <form method="POST" action="{{ route('login') }}" id="verifyForm">
                         @csrf
 
                         <div class="form-group row">
@@ -65,9 +83,75 @@
                             </div>
                         </div>
                     </form>
+                    <br/>
+                    <br/>
+
+
+
+                        <div class="text-center">
+                            {{ __('Si no recibiste el correo de confirmacion') }},
+                            <form class="d-inline" >
+                                <button onclick="resendEmail();" class="btn btn-link p-0 m-0 align-baseline" id="resendButton">{{ __('click aqui para solicitar otro') }}</button>.
+                            </form>
+                        </div>
                 </div>
             </div>
         </div>
+        <script>
+            function resendEmail() {
+               
+                var resendButton = document.getElementById('resendButton');
+                resendButton.disabled = true;
+
+                var form = document.getElementById("verifyForm");
+                Array.from(form.elements).forEach(formElement => formElement.disabled = true);
+
+                var globalAlert = document.getElementById('globalAlert');
+                var message = globalAlert.innerHTML;
+                globalAlert.innerHTML = "{{ trans('black-bits/laravel-cognito-auth::validation.resending') }}";
+
+                var xhr = new XMLHttpRequest();
+                var csrf = document.getElementsByName("_token")[0].value;
+                var email = document.getElementById('name').value;
+                var params = 'name=' + email;
+
+                xhr.open('POST', "{{ route('cognito.verification-resend') }}");
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrf);
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // document.body.innerHTML = xhr.responseText;
+                        Array.from(form.elements).forEach(formElement => formElement.disabled = false);
+                        globalAlert.innerHTML = "{{ trans('black-bits/laravel-cognito-auth::validation.resend') }}";
+                        resendButton.disabled = false;
+                    }
+                    else if (xhr.status !== 200) {
+                        if(xhr.status === 400) {
+                            var prased = JSON.parse(xhr.responseText)
+                            // console.log(1,prased);
+                            alert(prased.error)
+                        }
+                        else if(xhr.status === 422) {
+                            // console.log(prased);
+                            alert("El campo de RFC es necesario para mandar el nuevo link al correo relacionado con esta cuenta.")
+                        } else {
+                            // console.log(prased);
+                            alert('Request failed.  Returned status of ' + xhr.status);
+                        }
+
+                        Array.from(form.elements).forEach(formElement => formElement.disabled = false);
+                        resendButton.disabled = false;
+                        globalAlert.innerHTML = message;
+                    }
+                };
+                // console.log(12);
+                xhr.send(params);
+            }
+        </script>
     </div>
+    
 </div>
 @endsection
+
